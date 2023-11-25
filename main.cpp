@@ -8,20 +8,34 @@
 #include <locale.h>
 #include <lab.h>
 #include <string.h>
+#include <time.h>
 #include <windows.h>
 #include <ctype.h>
 #include <conio.h>
 
 #define DECK_SIZE 81
 
-/*
-void dealer()
-{
-	
-}
-*/
+typedef struct {
+	char runner;
+	int color;
+}card;
 
-void shuffle_position(char *x, char *y)
+typedef struct {
+	card v[DECK_SIZE];
+	int m;
+}deck;
+
+typedef struct {
+	card v[8];
+	int m;
+}hand;
+
+typedef struct {
+	char name[20];
+	hand mao;
+}p1;
+
+void shuffle_position(char* x, char* y)
 {
 	char aux;
 	aux = *x;
@@ -29,11 +43,37 @@ void shuffle_position(char *x, char *y)
 	*y = aux;
 }
 
-/*
-void shuffle(char *w)
+void InitDeck(deck * baralho)
 {
+	int i = 0;
+	int x = 0;
+	srand((unsigned)time(NULL));
+
+	baralho->m = 0;
+	(*baralho).m = 0;
+
+	for (i = 0; i < 18; i++)
+		baralho->v[i].runner = 'h';
+	baralho->m = 18;
+	for (i = 0; i < 17; i++)
+		baralho->v[i + baralho->m].runner = 't';
+	baralho->m += 17;
+	for (i = 0; i < 16; i++)
+		baralho->v[i + baralho->m].runner = 'w';
+	baralho->m += 16;
+	for (i = 0; i < 15; i++)
+		baralho->v[i + baralho->m].runner = 'f';
+	baralho->m += 15;
+	for (i = 0; i < 15; i++)
+		baralho->v[i + baralho->m].runner = 'l';
+	baralho->m += 15;
+
+	for (i = 0; i < 81; i++)
+	{
+		x = rand() % 81;
+		shuffle_position(&baralho->v[i].runner, &baralho->v[x].runner);
+	}
 }
-*/
 
 void arrowHere(int realPosition, int arrowPosition)
 {
@@ -46,52 +86,54 @@ void arrowHere(int realPosition, int arrowPosition)
 	}
 }
 
-int main(void)
+int menu()
 {
-	setlocale(LC_ALL, "Portuguese");
-	
-	char deck[DECK_SIZE];
-	char teste[50];
-	char *a= teste;
-	int op = -1;
 	int position = 1;
 	int keypressed = 0;
-
+	
 	do
 	{
-		gotoxy(50, 5); arrowHere(1, position); printf("1 - Novo Jogo\n");
-		gotoxy(50, 6); arrowHere(2, position); printf("2 - Carregar Jogo\n");
-		gotoxy(50, 7); arrowHere(3, position); printf("3 - Sair\n");
-		
-		//scanf("%d", &op);
-		//getch();
+		gotoxy(40, 5); arrowHere(1, position); printf("1 - Novo Jogo\n");
+		gotoxy(40, 6); arrowHere(2, position); printf("2 - Carregar Jogo\n");
+		gotoxy(40, 7); arrowHere(3, position); printf("3 - Sair\n");
+
 		keypressed = getch();
-		if (keypressed == 80 && position!=3)
+
+		if (keypressed == 80 && position != 3)
 		{
 			position++;
 		}
-		else if (keypressed == 72 && position!=1)
+		else if (keypressed == 72 && position != 1)
 		{
 			position--;
 		}
 	} while (keypressed != 13);
 
-		switch (position)
-		{
-		case 1:
-			printf("teste");
-			break;
+	return position;
+}
 
-		case 2:
-			break;
-		case 3:
-			exit(-1);
-		}
+int main(void)
+{
+	setlocale(LC_ALL, "Portuguese");
 	
+	int i = 0;
+	int op=0;
 
-	// fgets(teste, sizeof(teste), stdin); // gets nao funcionava, com o fgets funciona, utilizar stdin no fim para ler isto caso contrario ler do ficheiro que for
+	deck baralho;
 
-	//showRectCenteredAt(0, 20, 30, 30);
-	// printfAt(50, 5, a);
+	InitDeck(&baralho);
 
+	switch (menu())
+	{
+	case 1:
+		for (i = 0; i < 81; i++)
+			printf("%c  ", baralho.v[i]);
+		break;
+
+	case 2:
+		break;
+	case 3:
+		exit(-1);
+	}
+		
 }
