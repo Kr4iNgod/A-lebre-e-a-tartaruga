@@ -90,6 +90,17 @@ void InitDeck(deck* baralho)
 	}
 }
 
+void ReadFile(char *read)
+{
+	FILE *fp;
+
+	char rules[2000];
+
+	fp = fopen(".txt", "r");
+
+	fgets(rules, 20900, fp);
+}
+
 void arrowHere(int realPosition, int arrowPosition)
 {
 	if (realPosition == arrowPosition) {
@@ -99,6 +110,14 @@ void arrowHere(int realPosition, int arrowPosition)
 	{
 		printf("      ");
 	}
+}
+
+void SetTable(int *table)
+{
+	int i;
+
+	for (i = 0; i < 11; i++)
+		table[i] += 1;
 }
 
 int menu()
@@ -133,10 +152,12 @@ int main(void)
 	
 	int i = 0;
 	int op=0;
+	int tabuleiro;
 
 	deck baralho;
 
 	InitDeck(&baralho);
+	// SetTable(tabuleiro);
 
 	switch (menu())
 	{
@@ -148,6 +169,8 @@ int main(void)
 	case 2:
 		break;
 	case 3:
+		// ReadFile();
+	case 4:
 		exit(-1);
 	}
 		
