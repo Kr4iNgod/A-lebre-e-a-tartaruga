@@ -43,7 +43,7 @@ void shuffle_position(char* x, char* y)
 	*y = aux;
 }
 
-void InitDeck(deck * baralho)
+void InitDeck(deck* baralho)
 {
 	int i = 0;
 	int x = 0;
@@ -53,19 +53,34 @@ void InitDeck(deck * baralho)
 	(*baralho).m = 0;
 
 	for (i = 0; i < 18; i++)
+	{
 		baralho->v[i].runner = 'h';
+		baralho->v[i].color = MY_COLOR_LIGTH_YELLOW;
+	}
 	baralho->m = 18;
 	for (i = 0; i < 17; i++)
+	{
 		baralho->v[i + baralho->m].runner = 't';
+		baralho->v[i + baralho->m].color = MY_COLOR_LIGTH_GREEN;
+	}
 	baralho->m += 17;
 	for (i = 0; i < 16; i++)
+	{
 		baralho->v[i + baralho->m].runner = 'w';
+		baralho->v[i + baralho->m].color = MY_COLOR_GRAY;
+	}
 	baralho->m += 16;
 	for (i = 0; i < 15; i++)
+	{	
 		baralho->v[i + baralho->m].runner = 'f';
+		baralho->v[i + baralho->m].color = MY_COLOR_DARK_YELLOW;
+	}
 	baralho->m += 15;
 	for (i = 0; i < 15; i++)
+	{
 		baralho->v[i + baralho->m].runner = 'l';
+		baralho->v[i + baralho->m].color = MY_COLOR_WHITE;
+	}
 	baralho->m += 15;
 
 	for (i = 0; i < 81; i++)
@@ -127,7 +142,7 @@ int main(void)
 	{
 	case 1:
 		for (i = 0; i < 81; i++)
-			printf("%c  ", baralho.v[i]);
+			printf("%c  ", baralho.v[i].runner);
 		break;
 
 	case 2:
