@@ -90,6 +90,32 @@ void InitDeck(deck* baralho)
 	}
 }
 
+void getname()
+{
+	char nome[20];
+	int lenght= 0;	
+	int test = 0;
+
+	while(true)
+	{
+		printf("Introduza o seu nome: ");
+		fgets(nome, sizeof(nome), stdin);
+		lenght = strlen(nome) - 1;
+
+		if (lenght < 20 && lenght > 0)
+		{
+			printf("Ola %s \n", nome);
+			break;
+		}
+		else if (lenght > 20)
+			printf("O nome nao pode ter mais que 20 caracteres!\n");
+		else if (lenght <= 0)
+			printf("Por favor insira um nome!\n");
+	}
+
+	printf("%d", lenght);
+}
+
 void ReadFile()
 {
 	FILE *fp;
@@ -168,6 +194,9 @@ int main(void)
 	case 1:
 		for (i = 0; i < 81; i++)
 			printf("%c  ", baralho.v[i].runner);
+
+		getname();
+
 		break;
 
 	case 2:
