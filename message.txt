@@ -90,20 +90,15 @@ void InitDeck(deck* baralho)
 	}
 }
 
-void ReadFile()
+void ReadFile(char *read)
 {
 	FILE *fp;
 
-	char rules[9000];
+	char rules[2000];
 
-	fp = fopen("RegrasDoJogo.txt", "r");
-	
-	while (!feof(fp))
-	{
-		fgets(rules, 9000, fp);
-	}
+	fp = fopen(".txt", "r");
 
-	printf("%s", rules);
+	fgets(rules, 20900, fp);
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -134,12 +129,11 @@ int menu()
 	{
 		gotoxy(40, 5); arrowHere(1, position); printf("1 - Novo Jogo\n");
 		gotoxy(40, 6); arrowHere(2, position); printf("2 - Carregar Jogo\n");
-		gotoxy(40, 7); arrowHere(3, position); printf("3 - Regras\n");
-		gotoxy(40, 8); arrowHere(4, position); printf("4 - Sair\n");
+		gotoxy(40, 7); arrowHere(3, position); printf("3 - Sair\n");
 
 		keypressed = getch();
 
-		if (keypressed == 80 && position != 4)
+		if (keypressed == 80 && position != 3)
 		{
 			position++;
 		}
