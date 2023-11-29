@@ -1,5 +1,5 @@
-						    O jogo “A Lebre e a Tartaruga”
-							“Devagar se vai ao longe”.
+O jogo “A Lebre e a Tartaruga”
+“Devagar se vai ao longe”.
 
 Jogo competitivo, baseado no conto com o mesmo nome, onde os vários jogadores
 apostam na vitória de um ou mais dos corredores em competição e de seguida procuram

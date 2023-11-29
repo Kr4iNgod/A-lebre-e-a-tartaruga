@@ -94,16 +94,14 @@ void ReadFile()
 {
 	FILE *fp;
 
-	char rules[9000];
+	char rules[5400];
 
 	fp = fopen("RegrasDoJogo.txt", "r");
 	
-	//while (!feof(fp))
-	
-		fgets(rules, 9000, fp);
-	
+	while (fgets(rules, sizeof(rules), fp) != NULL)
+		printf("%s", rules);
 
-	printf("%s \n", rules);
+	fclose(fp);
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -154,7 +152,7 @@ int menu()
 
 int main(void)
 {
-	setlocale(LC_ALL, "Portuguese");
+	setlocale(LC_ALL, "Portuguese.UTF-8");
 	
 	int i = 0;
 	int op=0;
