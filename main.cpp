@@ -31,7 +31,7 @@ typedef struct {
 }hand;
 
 typedef struct {
-	char name[25];
+	char name[20];
 	hand mao;
 }p1;
 
