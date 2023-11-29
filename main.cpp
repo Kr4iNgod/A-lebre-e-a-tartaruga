@@ -31,7 +31,7 @@ typedef struct {
 }hand;
 
 typedef struct {
-	char name[20];
+	char name[25];
 	hand mao;
 }p1;
 
@@ -90,30 +90,32 @@ void InitDeck(deck* baralho)
 	}
 }
 
-void getname()
+void getname(p1 *jogador)
 {
-	char nome[20];
-	int lenght= 0;	
-	int test = 0;
+	size_t lenght= 0;	
+	int i = 0;
 
-	while(true)
+	while (true)
 	{
 		printf("Introduza o seu nome: ");
-		fgets(nome, sizeof(nome), stdin);
-		lenght = strlen(nome) - 1;
+		fgets(jogador->name, sizeof(jogador->name), stdin);
+		lenght = strlen(jogador->name) - 1;
 
 		if (lenght < 20 && lenght > 0)
 		{
-			printf("Ola %s \n", nome);
+			printf("Ola %s \n", jogador->name);
 			break;
 		}
 		else if (lenght > 20)
-			printf("O nome nao pode ter mais que 20 caracteres!\n");
+		{
+			printf("O nome nao pode ter mais que 20 caracteres! \n");
+			strcpy(jogador->name, "");
+		}
 		else if (lenght <= 0)
+		{
 			printf("Por favor insira um nome!\n");
+		}
 	}
-
-	printf("%d", lenght);
 }
 
 void ReadFile()
@@ -128,6 +130,11 @@ void ReadFile()
 		printf("%s", rules);
 
 	fclose(fp);
+}
+
+void dealer(p1* player, deck *baralho)
+{
+
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -185,6 +192,7 @@ int main(void)
 	int tabuleiro;
 
 	deck baralho;
+	p1 jogador;
 
 	InitDeck(&baralho);
 	// SetTable(tabuleiro);
@@ -195,7 +203,7 @@ int main(void)
 		for (i = 0; i < 81; i++)
 			printf("%c  ", baralho.v[i].runner);
 
-		getname();
+		getname(&jogador);
 
 		break;
 
