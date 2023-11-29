@@ -98,12 +98,12 @@ void ReadFile()
 
 	fp = fopen("RegrasDoJogo.txt", "r");
 	
-	while (!feof(fp))
-	{
+	//while (!feof(fp))
+	
 		fgets(rules, 9000, fp);
-	}
+	
 
-	printf("%s", rules);
+	printf("%s \n", rules);
 }
 
 void arrowHere(int realPosition, int arrowPosition)
