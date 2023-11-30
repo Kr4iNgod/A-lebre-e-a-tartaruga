@@ -14,6 +14,7 @@
 #include <conio.h>
 
 #define DECK_SIZE 81
+#define HAND_SIZE 8
 
 typedef struct {
 	char runner;
@@ -121,6 +122,8 @@ void getname(p1 *jogador)
 void ReadFile()
 {
 	FILE *fp;
+	
+	setlocale(LC_ALL, "Portuguese.UTF-8");
 
 	char rules[5400];
 
@@ -132,15 +135,39 @@ void ReadFile()
 	fclose(fp);
 }
 
-void dealer(p1* player, deck *baralho)
+void dealer(p1* player, deck *baralho, hand* mao)
 {
+	int i = 0;
 
+	for (i = 0; i<HAND_SIZE; i++)
+	{
+		player->mao.v[i].runner = baralho->v[baralho->m - i - 1].runner;
+		player->mao.v[i].color = baralho->v[baralho->m - i - 1].color;
+	}
+	baralho->m -= 8;
+	mao->m += 8;
 }
 
 void arrowHere(int realPosition, int arrowPosition)
 {
 	if (realPosition == arrowPosition) {
 		printf("----> ");
+	}
+	else
+	{
+		printf("      ");
+	}
+}
+
+void arrowHereV(int realPosition, int arrowPosition)
+{
+	int i = 0;
+	
+	if (realPosition == arrowPosition) {
+		printf("\n");
+		for (i = 0; i < 2; i++)
+			printf("|\n");
+		printf("V");
 	}
 	else
 	{
@@ -185,7 +212,7 @@ int menu()
 
 int main(void)
 {
-	setlocale(LC_ALL, "Portuguese.UTF-8");
+	setlocale(LC_ALL, "Portuguese");
 	
 	int i = 0;
 	int op=0;
@@ -193,6 +220,7 @@ int main(void)
 
 	deck baralho;
 	p1 jogador;
+	hand mao;
 
 	InitDeck(&baralho);
 	// SetTable(tabuleiro);
@@ -202,8 +230,15 @@ int main(void)
 	case 1:
 		for (i = 0; i < 81; i++)
 			printf("%c  ", baralho.v[i].runner);
-
+		printf("\n %d", baralho.m);
 		getname(&jogador);
+
+		dealer(&jogador, &baralho, &mao);
+
+		for (i = 0; i < 8; i++)
+			printf("%c  ", jogador.mao.v[i].runner);
+
+		arrowHereV(1, 1);
 
 		break;
 
