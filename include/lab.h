@@ -1,6 +1,6 @@
 #ifndef _LABH_		//protectes from multiple including...
 #define _LABH_		//... needs an #endif at bottom
-#define _CRT_SECURE_NO_WARNINGS 1
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdlib.h>
 #include <stdio.h>
