@@ -33,7 +33,8 @@ typedef struct {
 
 typedef struct {
 	char name[20];
-	hand mao[2];
+	//hand mao[3];
+	hand mao;
 }player;
 
 typedef struct {
@@ -140,24 +141,18 @@ void ReadFile()
 	fclose(fp);
 }
 
-void dealer(player* jogador, deck *baralho, hand* mao)
+void dealer(player* jogador, deck* baralho)
 {
 	int i = 0;
 
-	for (i = 0; i< baralho->m; i++)
+	for (i = 0; i< HAND_SIZE; i++)
 	{
-		jogador->mao[0].v[i].runner = baralho->v[baralho->m - i - 1].runner;
-		jogador->mao[0].v[i].color = baralho->v[baralho->m - i - 1].color;
+		jogador->mao.v[i].runner = baralho->v[baralho->m - i -1].runner;
+		jogador->mao.v[i].color = baralho->v[baralho->m - i -1].color;
 	}
 	baralho->m -= 8;
-	for (i = 0; i < baralho->m; i++)
-	{
-		jogador->mao[1].v[i].runner = baralho->v[baralho->m - i - 1].runner;
-		jogador->mao[1].v[i].color = baralho->v[baralho->m - i - 1].color;
-	}
-	baralho->m -= 8;
-	jogador->mao[0].m += 8;
-	jogador->mao[1].m += 8;
+	jogador->mao.m = 8;
+	
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -225,13 +220,13 @@ int menu()
 int main(void)
 {
 	setlocale(LC_ALL, "Portuguese");
-	
+
 	int i = 0;
-	int op=0;
+	int op = 0;
 
 	deck baralho;
-	player jogador;
 	hand mao;
+	player jogadores[2];
 
 	InitDeck(&baralho);
 
@@ -241,15 +236,16 @@ int main(void)
 		for (i = 0; i < 81; i++)
 			printf("%c  ", baralho.v[i].runner);
 		printf("\n %d", baralho.m);
-		getname(&jogador);
-
-		dealer(&jogador, &baralho, &mao);
-
+		for (i = 0; i < 2; i++)
+		{
+			getname(&jogadores[i]);
+			dealer(&jogadores[i], &baralho);
+		}
 		for (i = 0; i < 8; i++)
-			printf("%c  ", jogador.mao[0].v[i].runner);
+			printf("%c  ", jogadores[0].mao.v[i].runner);
 		arrowHereV(1, 1);
 		for (i = 0; i < 8; i++)
-			printf("%c  ", jogador.mao[1].v[i].runner);
+			printf("%c  ", jogadores[1].mao.v[i].runner);
 
 		break;
 
