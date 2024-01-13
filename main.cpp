@@ -71,12 +71,18 @@ void InitDeck(deck* baralho)
 		baralho->v[i + baralho->m].color = MY_COLOR_LIGTH_GREEN;
 	}
 	baralho->m += 17;
-	for (i = 0; i < 16; i++)
+	for (i = 0; i < 13; i++)
 	{
-		baralho->v[i + baralho->m].runner = 'w'; // w- lobo 16
+		baralho->v[i + baralho->m].runner = 'w'; // w- lobo 13
 		baralho->v[i + baralho->m].color = MY_COLOR_GRAY;
 	}
-	baralho->m += 16;
+	baralho->m += 13;
+	for (i = 0; i < 3; i++)
+	{
+		baralho->v[i + baralho->m].runner = 's'; // s - uivo lobo 3
+		baralho->v[i + baralho->m].color = MY_COLOR_GRAY;
+	}
+	baralho->m += 3;
 	for (i = 0; i < 15; i++)
 	{
 		baralho->v[i + baralho->m].runner = 'f'; // f - raposa 15
@@ -246,12 +252,25 @@ int main(void)
 	switch (menu())
 	{
 	case 1:
-
-		break;
+		for (i = 0; i < 81; i++)
+			printf("%c  ", baralho.v[i].runner);
+		printf("\n %d", baralho.m);
+		getname(&jogadores[0]);
+		for (i = 0; i < 2; i++)
+		{
+			dealer(&jogadores[i], &baralho);
+		}
+		for (i = 0; i < 8; i++)
+			printf("%c  ", jogadores[0].mao.v[i].runner);
+		arrowHereV(1, 1);
+		for (i = 0; i < 8; i++)
+			printf("%c  ", jogadores[1].mao.v[i].runner);
+			break;
 
 	case 2:
 		break;
 	case 3:
+		system("cls");
 		ReadFile();
 	case 4:
 		exit(-1);
