@@ -246,19 +246,6 @@ int main(void)
 	switch (menu())
 	{
 	case 1:
-		for (i = 0; i < 81; i++)
-			printf("%c  ", baralho.v[i].runner);
-		printf("\n %d", baralho.m);
-		getname(&jogadores[0]);
-		for (i = 0; i < 2; i++)
-		{
-			dealer(&jogadores[i], &baralho);
-		}
-		for (i = 0; i < 8; i++)
-			printf("%c  ", jogadores[0].mao.v[i].runner);
-		arrowHereV(1, 1);
-		for (i = 0; i < 8; i++)
-			printf("%c  ", jogadores[1].mao.v[i].runner);
 
 		break;
 
