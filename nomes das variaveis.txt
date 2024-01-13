@@ -1,5 +1,0 @@
-h- lebre 18
-t- tartaruga 17
-w- lobo 16
-f- raposa 15
-l- cordeiro 15

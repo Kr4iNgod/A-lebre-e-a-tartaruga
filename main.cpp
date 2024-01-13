@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS_GLOBALS
 #define _CRT_NONSTDC_NO_WARNINGS
 #define _getch getch // para o getch funcionar
@@ -23,7 +23,7 @@ typedef struct {
 
 typedef struct {
 	card v[DECK_SIZE];
-	int m;
+	int m; // number of cards in the deck
 }deck;
 
 typedef struct {
@@ -33,14 +33,14 @@ typedef struct {
 
 typedef struct {
 	char name[20];
-	//hand mao[3];
 	hand mao;
 }player;
 
 typedef struct {
-	int p[11];
-	hand mao[2];
-}table;
+	int s[11]; // board position
+	char t[11]; // board position type 
+	hand mao[8];
+}board;
 
 void shuffle_position(char* x, char* y)
 {
@@ -61,31 +61,31 @@ void InitDeck(deck* baralho)
 
 	for (i = 0; i < 18; i++)
 	{
-		baralho->v[i].runner = 'h';
+		baralho->v[i].runner = 'h'; // h - Lebre 18
 		baralho->v[i].color = MY_COLOR_LIGTH_YELLOW;
 	}
 	baralho->m = 18;
 	for (i = 0; i < 17; i++)
 	{
-		baralho->v[i + baralho->m].runner = 't';
+		baralho->v[i + baralho->m].runner = 't'; // t - Tartaruga 17
 		baralho->v[i + baralho->m].color = MY_COLOR_LIGTH_GREEN;
 	}
 	baralho->m += 17;
 	for (i = 0; i < 16; i++)
 	{
-		baralho->v[i + baralho->m].runner = 'w';
+		baralho->v[i + baralho->m].runner = 'w'; // w- lobo 16
 		baralho->v[i + baralho->m].color = MY_COLOR_GRAY;
 	}
 	baralho->m += 16;
 	for (i = 0; i < 15; i++)
-	{	
-		baralho->v[i + baralho->m].runner = 'f';
+	{
+		baralho->v[i + baralho->m].runner = 'f'; // f - raposa 15
 		baralho->v[i + baralho->m].color = MY_COLOR_DARK_YELLOW;
 	}
 	baralho->m += 15;
 	for (i = 0; i < 15; i++)
 	{
-		baralho->v[i + baralho->m].runner = 'l';
+		baralho->v[i + baralho->m].runner = 'l'; // l - cordeiro 15
 		baralho->v[i + baralho->m].color = MY_COLOR_WHITE;
 	}
 	baralho->m += 15;
@@ -97,11 +97,11 @@ void InitDeck(deck* baralho)
 	}
 }
 
-void getname(player *jogador)
+void getname(player* jogador)
 {
-	size_t lenght= 0;	
+	size_t lenght = 0;
 	int i = 0;
-	
+
 	while (true)
 	{
 		printf("Introduza o seu nome: ");
@@ -127,14 +127,14 @@ void getname(player *jogador)
 
 void ReadFile()
 {
-	FILE *fp;
-	
+	FILE* fp;
+
 	setlocale(LC_ALL, "Portuguese.UTF-8");
 
 	char rules[5400];
 
 	fp = fopen("RegrasDoJogo.txt", "r");
-	
+
 	while (fgets(rules, sizeof(rules), fp) != NULL)
 		printf("%s", rules);
 
@@ -145,14 +145,14 @@ void dealer(player* jogador, deck* baralho)
 {
 	int i = 0;
 
-	for (i = 0; i< HAND_SIZE; i++)
+	for (i = 0; i < HAND_SIZE; i++)
 	{
-		jogador->mao.v[i].runner = baralho->v[baralho->m - i -1].runner;
-		jogador->mao.v[i].color = baralho->v[baralho->m - i -1].color;
+		jogador->mao.v[i].runner = baralho->v[baralho->m - i - 1].runner;
+		jogador->mao.v[i].color = baralho->v[baralho->m - i - 1].color;
 	}
 	baralho->m -= 8;
 	jogador->mao.m = 8;
-	
+
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -169,7 +169,7 @@ void arrowHere(int realPosition, int arrowPosition)
 void arrowHereV(int realPosition, int arrowPosition)
 {
 	int i = 0;
-	
+
 	if (realPosition == arrowPosition) {
 		printf("\n");
 		for (i = 0; i < 2; i++)
@@ -182,19 +182,32 @@ void arrowHereV(int realPosition, int arrowPosition)
 	}
 }
 
-void SetTable(int *table)
+void SetBoard(board* board)
 {
-	int i;
+	int i, x;
+	srand((unsigned)time(NULL));
 
+	for (i = 0; i < 9; i++)
+	{
+		board->t[i] = 'n';
+	}
+	for (i = 9; i < 11; i++)
+	{
+		board->t[i] = 'r';
+	}
 	for (i = 0; i < 11; i++)
-		table[i] += 1;
+	{
+		x = rand() % 10;
+		shuffle_position(&board->t[i], &board->t[x]);
+	}
+
 }
 
 int menu()
 {
 	int position = 1;
 	int keypressed = 0;
-	
+
 	do
 	{
 		gotoxy(40, 5); arrowHere(1, position); printf("1 - Novo Jogo\n");
@@ -236,9 +249,9 @@ int main(void)
 		for (i = 0; i < 81; i++)
 			printf("%c  ", baralho.v[i].runner);
 		printf("\n %d", baralho.m);
+		getname(&jogadores[0]);
 		for (i = 0; i < 2; i++)
 		{
-			getname(&jogadores[i]);
 			dealer(&jogadores[i], &baralho);
 		}
 		for (i = 0; i < 8; i++)
