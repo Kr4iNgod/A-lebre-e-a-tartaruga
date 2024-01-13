@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS_GLOBALS
 #define _CRT_NONSTDC_NO_WARNINGS
 #define _getch getch // para o getch funcionar
@@ -79,7 +79,7 @@ void InitDeck(deck* baralho)
 	}
 	baralho->m += 16;
 	for (i = 0; i < 15; i++)
-	{
+	{	
 		baralho->v[i + baralho->m].runner = 'f';
 		baralho->v[i + baralho->m].color = MY_COLOR_DARK_YELLOW;
 	}
@@ -98,11 +98,11 @@ void InitDeck(deck* baralho)
 	}
 }
 
-void getname(player* jogador)
+void getname(player *jogador)
 {
-	size_t lenght = 0;
+	size_t lenght= 0;	
 	int i = 0;
-
+	
 	while (true)
 	{
 		printf("Introduza o seu nome: ");
@@ -128,14 +128,14 @@ void getname(player* jogador)
 
 void ReadFile()
 {
-	FILE* fp;
-
+	FILE *fp;
+	
 	setlocale(LC_ALL, "Portuguese.UTF-8");
 
 	char rules[5400];
 
 	fp = fopen("RegrasDoJogo.txt", "r");
-
+	
 	while (fgets(rules, sizeof(rules), fp) != NULL)
 		printf("%s", rules);
 
@@ -146,14 +146,14 @@ void dealer(player* jogador, deck* baralho)
 {
 	int i = 0;
 
-	for (i = 0; i < HAND_SIZE; i++)
+	for (i = 0; i< HAND_SIZE; i++)
 	{
-		jogador->mao.v[i].runner = baralho->v[baralho->m - i - 1].runner;
-		jogador->mao.v[i].color = baralho->v[baralho->m - i - 1].color;
+		jogador->mao.v[i].runner = baralho->v[baralho->m - i -1].runner;
+		jogador->mao.v[i].color = baralho->v[baralho->m - i -1].color;
 	}
 	baralho->m -= 8;
 	jogador->mao.m = 8;
-
+	
 }
 
 void arrowHere(int realPosition, int arrowPosition)
@@ -170,7 +170,7 @@ void arrowHere(int realPosition, int arrowPosition)
 void arrowHereV(int realPosition, int arrowPosition)
 {
 	int i = 0;
-
+	
 	if (realPosition == arrowPosition) {
 		printf("\n");
 		for (i = 0; i < 2; i++)
@@ -183,7 +183,7 @@ void arrowHereV(int realPosition, int arrowPosition)
 	}
 }
 
-void SetBoard(board* board)
+void SetBoard(board *board)
 {
 	int i, x;
 	srand((unsigned)time(NULL));
@@ -201,14 +201,14 @@ void SetBoard(board* board)
 		x = rand() % 10;
 		shuffle_position(&board->t[i], &board->t[x]);
 	}
-
+	
 }
 
 int menu()
 {
 	int position = 1;
 	int keypressed = 0;
-
+	
 	do
 	{
 		gotoxy(40, 5); arrowHere(1, position); printf("1 - Novo Jogo\n");
@@ -270,5 +270,5 @@ int main(void)
 	case 4:
 		exit(-1);
 	}
-
+		
 }
