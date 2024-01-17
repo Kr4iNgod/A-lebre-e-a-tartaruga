@@ -210,8 +210,8 @@ void arrowHereV(int realPosition, int arrowPosition)
 
 void SetBoard(board* board, player* jogador)
 {
-	int i, x,rp, ap; // rp - real position , ap = arrow position
- 	x = 0; // serve como posicao x do retangulo
+	int i, x, rp, ap; // rp - real position , ap = arrow position
+	x = 0; // serve como posicao x do retangulo
 
 	for (i = 0; i < 11; i++)
 		board->t[i] = 'n'; // posicoes normais;
@@ -243,19 +243,19 @@ void SetBoard(board* board, player* jogador)
 		x += 6;
 	}
 
-	x = 0;	
+	x = 0;
 	for (i = 0; i < HAND_SIZE; i++) // Colocar Desenho das Cartas
 	{
 		setColor(jogador->mao.v[i].color, MY_COLOR_BLACK);
 		showRectAt(x, 15, 5, 5);
 		x += 6;
 	}
-	
+
 	x = 0;
 	for (i = 0; i < HAND_SIZE; i++) // Colocar Letra do Animal Na Carta
 	{
 		setColor(MY_COLOR_WHITE, MY_COLOR_BLACK);
-		gotoxy(x+3, 18); printf("%c", jogador->mao.v[i].runner);
+		gotoxy(x + 3, 18); printf("%c", jogador->mao.v[i].runner);
 		x += 6;
 	}
 	gotoxy(0, 20); printf("\n");
@@ -292,7 +292,7 @@ int main(void)
 {
 	setlocale(LC_ALL, "Portuguese");
 
-	int i,op = 0;
+	int i, op = 0;
 
 	deck baralho;
 	hand mao;
@@ -316,7 +316,7 @@ int main(void)
 		// arrowHereV(1, 1);
 		for (i = 0; i < HAND_SIZE; i++)
 			printf("%c  ", jogadores[1].mao.v[i].runner);
-		
+
 		system("pause");
 		system("cls");
 
@@ -332,5 +332,5 @@ int main(void)
 	case 4:
 		exit(-1);
 	}
-		
+
 }
